@@ -11,6 +11,12 @@
     <script src="../lib/farbe.js"></script>
     <script>
         console.log("Result:", Farbe.Routines.saturate("#9927b0", 55))
+
+        const color = farbe("#000000")
+        color.toRGB(); console.log(""+color); //rgb(0,0,0)
+        color.toHSL(); console.log(""+color); //rgb(0,0,0)
+        color.toCMYK(); console.log(""+color); //rgb(0,0,0)
+
     </script>
 </body>
 </html>
