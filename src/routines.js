@@ -669,7 +669,7 @@ export const toRGB = color => {
  * @param alpha
  * @returns {RGBA|*}
  */
-export const toRGBA = (color, alpha) => {
+export const toRGBA = (color, alpha = 1) => {
     if (isRGBA(color)) {
         if (alpha) {
             color.a = alpha;
@@ -677,7 +677,7 @@ export const toRGBA = (color, alpha) => {
         return color;
     }
     const rgb = toRGB(color);
-    return new RGBA(rgb.r, rgb.g, rgb.b, alpha);
+    return new RGBA(rgb.r, rgb.g, rgb.b, typeof color.a !== "undefined" ? color.a : alpha);
 };
 
 /**
@@ -712,7 +712,7 @@ export const toHSLA = (color, alpha = 1) => {
         return color;
     }
     let hsla = hsv2hsl(rgb2hsv(toRGB(color)));
-    hsla.a = alpha;
+    hsla.a = typeof color.a !== "undefined" ? color.a : alpha;
     return new HSLA(hsla.h, hsla.s, hsla.l, hsla.a);
 };
 
