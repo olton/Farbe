@@ -1214,9 +1214,7 @@ export const parseColor = function (color) {
     let a = _color
         .replace(/[^\d.,]/g, "")
         .split(",")
-        .map(v => {
-            return _color.includes("hs") ? parseFloat(v) : parseInt(v);
-        });
+        .map(v => +v);
 
     if (_color[0] === "#") {
         return expandHexColor(_color);
