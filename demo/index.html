@@ -17,6 +17,16 @@
         // color.toHSL(); console.log(""+color); //rgb(0,0,0)
         // color.toCMYK(); console.log(""+color); //rgb(0,0,0)
         console.log(Farbe.Routines.parse('rgba(10,10,10,0.39)'))
+
+        const c = Farbe.Routines;
+
+        var colorHex = "#ff00ff";
+        var colorHsl = "hsl(300, 1, .5)";
+        var colorHsl2 = "hsl(300, 100%, 50%)";
+
+        console.log("To hsl: ", c.toHSL(colorHex));
+        console.log("To hex: ", c.toHEX(colorHsl));
+        console.log("To hex: ", c.toHEX(colorHsl2));
     </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 export default class HSL {
     constructor(h = 0, s = 0, l = 0) {
         this.h = h;
-        this.s = s;
-        this.l = l;
+        this.s = (""+s).includes("%") ? parseInt(s)/100 : s;
+        this.l = (""+l).includes("%") ? parseInt(l)/100 : l;
     }
 
     toString(){

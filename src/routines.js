@@ -641,9 +641,9 @@ export const toColor = (color, mode = "rgb", alpha = 1) => {
  * @returns {string}
  */
 export const toHEX = color => {
-    return typeof color === "string"
+    return typeof color === "string" && color[0] === "#"
         ? expandHexColor(color)
-        : rgb2hex(toRGB(color));
+        : rgb2hex(toRGB(parse(color)));
 };
 
 /**
@@ -1212,9 +1212,9 @@ export const parseColor = function (color) {
     }
 
     let a = _color
-        .replace(/[^\d.,]/g, "")
+        .replace(/[^\d.,%]/g, "")
         .split(",")
-        .map(v => +v);
+        .map(v => isNaN(v) ? v : +v);
 
     if (_color[0] === "#") {
         return expandHexColor(_color);

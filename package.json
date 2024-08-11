@@ -2,7 +2,7 @@
   "name": "@olton/farbe",
   "description": "Color Manipulation library",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "author": "Serhii Pimenov <serhii@pimenov.com.ua> (https://pimenov.com.ua)",
   "type": "module",
