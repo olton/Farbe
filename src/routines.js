@@ -1,14 +1,18 @@
-import HSV from "./primitives/hsv";
-import HSL from "./primitives/hsl";
-import HSLA from "./primitives/hsla";
-import RGB from "./primitives/rgb";
-import RGBA from "./primitives/rgba";
-import CMYK from "./primitives/cmyk";
+import HSV from "./primitives/hsv.js";
+import HSL from "./primitives/hsl.js";
+import HSLA from "./primitives/hsla.js";
+import RGB from "./primitives/rgb.js";
+import RGBA from "./primitives/rgba.js";
+import CMYK from "./primitives/cmyk.js";
 
 import {StandardColorPalette, MetroColorPalette} from "./palette.js";
+import HEX from "./primitives/hex.js";
+import HSVA from "./primitives/hsva.js";
 
 export const Primitives = {
+    HEX,
     HSV,
+    HSVA,
     HSL,
     HSLA,
     RGB,
@@ -21,6 +25,7 @@ export const colorTypes = {
     RGB: "rgb",
     RGBA: "rgba",
     HSV: "hsv",
+    HSVA: "hsv",
     HSL: "hsl",
     HSLA: "hsla",
     CMYK: "cmyk",
@@ -57,6 +62,16 @@ function convert(source, format) {
         case "rgba":
             result = source.map(function (v) {
                 return toRGBA(v, opt.alpha);
+            });
+            break;
+        case "hsv":
+            result = source.map(function (v) {
+                return toHSV(v);
+            });
+            break;
+        case "hsva":
+            result = source.map(function (v) {
+                return toHSVA(v, opt.alpha);
             });
             break;
         case "hsl":
@@ -136,25 +151,23 @@ export const create = createColor
  * @returns {string}
  */
 export const expandHexColor = function (hex) {
-    if (isColor(hex) && typeof hex !== "string") {
-        return hex;
-    }
-    if (typeof hex !== "string") {
-        throw new Error("Value is not a string!");
-    }
-    if (hex[0] === "#" && hex.length === 4) {
-        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        return (
-            "#" +
-            hex.replace(shorthandRegex, (m, r, g, b) => {
-                return r + r + g + g + b + b;
-            })
-        );
-    }
-    return hex[0] === "#" ? hex : "#" + hex;
+    if (typeof hex !== "string") { throw new Error("Value is not a string!"); }
+    if (hex.length === 7) { return hex; }
+
+    hex = hex.split("").slice(1);
+    hex.length = 3;
+    return "#"+hex.map(char => char + char).join('');
 };
 
 export const expand = expandHexColor
+
+export const splitHexColor = function (hex) {
+    if (typeof hex !== "string") {
+        throw new Error("Value is not a string!");
+    }
+
+    return hex.slice(1).match(/.{2}/g);
+}
 
 /**
  * Check if specified color is dark
@@ -238,7 +251,7 @@ export const isCMYK = color => {
  * @returns {boolean|undefined}
  */
 export const isHEX = color => {
-    return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color);
+    return parseColor(color) instanceof HEX;
 };
 
 /**
@@ -689,6 +702,12 @@ export const toHSV = color => {
     return rgb2hsv(toRGB(color));
 };
 
+export const toHSVA = (color, alpha = 1) => {
+    let hsv = rgb2hsv(toRGB(color));
+    hsv.a = alpha;
+    return new HSVA(hsv.h, hsv.s, hsv.v, hsv.a);
+};
+
 /**
  * Convert color to HSL
  * @param color
@@ -705,15 +724,9 @@ export const toHSL = color => {
  * @returns {HSLA|*}
  */
 export const toHSLA = (color, alpha = 1) => {
-    if (isHSLA(color)) {
-        if (alpha) {
-            color.a = alpha;
-        }
-        return color;
-    }
-    let hsla = hsv2hsl(rgb2hsv(toRGB(color)));
-    hsla.a = typeof color.a !== "undefined" ? color.a : alpha;
-    return new HSLA(hsla.h, hsla.s, hsla.l, hsla.a);
+    let hsl = hsv2hsl(rgb2hsv(toRGB(color)));
+    hsl.a = alpha;
+    return new HSLA(hsl.h, hsl.s, hsl.l, hsl.a);
 };
 
 /**
@@ -1198,7 +1211,7 @@ export const createColorScheme = (color, name, format = colorTypes.HEX, options)
 /**
  * Parse from string to color type
  * @param color
- * @returns {HSL|RGB|RGBA|string|HSV|CMYK|HSLA}
+ * @returns {HEX|HSL|RGB|RGBA|string|HSV|HSVA|CMYK|HSLA}
  */
 export const parseColor = function (color) {
     let _color = (""+color).toLowerCase();
@@ -1217,7 +1230,8 @@ export const parseColor = function (color) {
         .map(v => isNaN(v) ? v : +v);
 
     if (_color[0] === "#") {
-        return expandHexColor(_color);
+        _color = splitHexColor(expandHexColor(_color));
+        return  new HEX(_color[0], _color[1], _color[2]);
     }
 
     if (_color.includes("rgba")) {
@@ -1229,6 +1243,9 @@ export const parseColor = function (color) {
     if (_color.includes("cmyk")) {
         return new CMYK(a[0], a[1], a[2], a[3]);
     }
+    if (_color.includes("hsva")) {
+        return new HSVA(a[0], a[1], a[2], a[3]);
+    }
     if (_color.includes("hsv")) {
         return new HSV(a[0], a[1], a[2]);
     }
@@ -1238,7 +1255,7 @@ export const parseColor = function (color) {
     if (_color.includes("hsl")) {
         return new HSL(a[0], a[1], a[2]);
     }
-    return _color;
+    return undefined;
 };
 
 export const parse = parseColor

@@ -2,10 +2,28 @@
   "name": "@olton/farbe",
   "description": "Color Manipulation library",
   "private": false,
-  "version": "1.0.4",
-  "license": "MIT",
-  "author": "Serhii Pimenov <serhii@pimenov.com.ua> (https://pimenov.com.ua)",
+  "version": "1.1.0",
   "type": "module",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    "import": "./dist/farbe.js",
+    "require": "./dist/farbe.cjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Serhii Pimenov",
+    "email": "serhii@pimenov.com.ua",
+    "url": "https://pimenov.com.ua"
+  },
+  "funding": [
+    {
+      "type": "paypal",
+      "url": "serhii@pimenov.com.ua"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/olton/farbe.git"
@@ -13,42 +31,31 @@
   "keywords": [
     "farbe",
     "color",
-    "metroui",
     "js",
-    "less",
-    "css",
-    "html"
-  ],
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/farbe.cjs.js",
-  "module": "./dist/farbe.es.js",
-  "funding": [
-    {
-      "type": "paypal",
-      "url": "serhii@pimenov.com.ua"
-    },
-    {
-      "type": "patreon",
-      "url": "https://www.patreon.com/metroui"
-    },
-    {
-      "type": "subscription",
-      "url": "https://korzh.com/metroui#licensing"
-    }
+    "library"
   ],
   "scripts": {
-    "build": "npm run clear && cross-env MODE=production rollup -c",
-    "dev": "npm run clear && cross-env MODE=development rollup -c",
-    "watch": "cross-env MODE=development rollup -c -w",
+    "clean": "shx rm -rf lib/* dist/*",
+    "build:dist": "cross-env NODE_NO_WARNINGS=1 MODE=production node build.dist.js && npm run types",
+    "build:lib": "cross-env NODE_NO_WARNINGS=1 MODE=production node build.lib.js",
+    "build": "npm run clean && npm run build:dist && npm run build:lib",
+    "dev:dist": "cross-env NODE_NO_WARNINGS=1 MODE=development node build.dist.js",
+    "dev:lib": "cross-env NODE_NO_WARNINGS=1 MODE=development node build.lib.js",
+    "dev": "npm run clean && npm run dev:dist && npm run dev:lib",
+    "watch": "npm run clean && cross-env NODE_NO_WARNINGS=1 MODE=production node watch.js && npm run types",
+    "types": "npx -p typescript tsc",
+    "prepublishOnly": "npm run build:dist && npm run types",
     "pub": "npm publish --access public",
-    "clear": "shx rm -rf lib/* dist/*"
+    "test": "easytest --include='__tests__/*.test.js' --verbose --coverage"
   },
   "devDependencies": {
+    "@olton/easytest": "^0.39.0",
+    "@olton/esbuild-plugin-progress": "^0.3.0",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.24.0",
+    "esbuild-plugin-replace": "^1.4.0",
     "path": "^0.12.7",
     "shx": "^0.3.4",
-    "cross-env": "^7.0.3",
-    "rollup-plugin-terser": "^7.0.2"
+    "typescript": "^5.6.3"
   }
 }

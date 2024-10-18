@@ -3,10 +3,15 @@ export default class HSLA {
         this.h = h;
         this.s = (""+s).includes("%") ? parseInt(s)/100 : s;
         this.l = (""+l).includes("%") ? parseInt(l)/100 : l;
-        this.a = a;
+        this.a = (""+a).includes("%") ? parseInt(a)/100 : a;
     }
 
     toString(){
-        return "hsla(" + [Math.round(this.h), Math.round(this.s*100)+"%", Math.round(this.l*100)+"%", parseFloat(this.a).toFixed(2)].join(", ") + ")";
+        return "hsla(" + [
+            Math.round(this.h),
+            Math.round(this.s*100)+"%",
+            Math.round(this.l*100)+"%",
+            parseFloat(this.a).toFixed(2)
+        ].join(", ") + ")";
     }
 }

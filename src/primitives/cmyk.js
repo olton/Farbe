@@ -7,6 +7,6 @@ export default class CMYK {
     }
 
     toString(){
-        return `cmyk(${this.c},${this.m},${this.y},${this.k})`;
+        return `cmyk(${this.c}%, ${this.m}%, ${this.y}%, ${this.k}%)`;
     }
 }

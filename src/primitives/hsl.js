@@ -6,6 +6,10 @@ export default class HSL {
     }
 
     toString(){
-        return "hsl(" + [Math.round(this.h), Math.round(this.s*100)+"%", Math.round(this.l*100)+"%"].join(", ") + ")";
+        return "hsl(" + [
+            Math.round(this.h),
+            Math.round(this.s*100)+"%",
+            Math.round(this.l*100)+"%"
+        ].join(", ") + ")";
     }
 }
