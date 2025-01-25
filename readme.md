@@ -4,12 +4,15 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/52d3daac7718fbf8d53459533039ae580ff272dd.svg "Repobeats analytics image")
 
+#### Status
 ![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
-![Size](https://img.badgesize.io/olton/farbe/master/lib/farbe.js.svg)
-![Size gzip](https://img.badgesize.io/olton/farbe/master/lib/farbe.js.svg?compression=gzip)
-![GitHub release](https://img.shields.io/github/v/release/olton/farbe?color=darkLime)
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)
-![GitHub issues](https://img.shields.io/github/issues-raw/olton/farbe.svg?color=red)
+![Package Version](https://img.shields.io/github/package-json/v/olton/farbe)
+![GitHub Release](https://img.shields.io/github/v/release/olton/farbe)
+![NPM Version](https://img.shields.io/npm/v/%40olton%2Ffarbe)
+![Website](https://img.shields.io/website/https/farbe.org.ua.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?color=7852a9)
+![Code size](https://img.shields.io/github/languages/code-size/olton/farbe.svg?color=830000)
+![GitHub JS Size](https://img.shields.io/github/size/olton/farbe/lib%2Ffarbe.js?label=JS%20Size&color=8f99ff)
 
 Farbe provides `class` and `routines` for operations with color. 
 
