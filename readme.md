@@ -4,6 +4,13 @@
 
 ![Alt](https://repobeats.axiom.co/api/embed/52d3daac7718fbf8d53459533039ae580ff272dd.svg "Repobeats analytics image")
 
+![Dependencies](https://img.shields.io/badge/Dependencies-none-darklime.svg)
+![Size](https://img.badgesize.io/olton/farbe/master/lib/farbe.js.svg)
+![Size gzip](https://img.badgesize.io/olton/farbe/master/lib/farbe.js.svg?compression=gzip)
+![GitHub release](https://img.shields.io/github/v/release/olton/farbe?color=darkLime)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat)
+![GitHub issues](https://img.shields.io/github/issues-raw/olton/farbe.svg?color=red)
+
 Farbe provides `class` and `routines` for operations with color. 
 
 **Farbe** provides simple API that may be used to create colors (`HEX`, `RGB`, `RGBA`, `HSV`, `HSL`, `HSLA`, `CMYK`), 
@@ -15,15 +22,18 @@ any color schemes (complementary, triple, ...)
 npm i @olton/farbe
 ```
 
-## Using
-```javascript
-import Farbe from "@olton/farbe"
+## Documentation
 
-const color = new Farbe("#fff")
-
-console.log(color.toRGB()); // RGB {r: 255, g: 255, b: 255}
-console.log(color.toRGB().toString()); // rgb(255,255,255)
-```
+Read about `Hooks` usage in the [Metro UI](https://docs-new.metroui.org.ua/libraries/farbe) documentation.
 
 ## License
-This software is free to use under the MIT license. See the [LICENSE](LICENSE) file for license text and copyright information.
+
+Hooks are licensed under a [MIT license](LICENSE).
+
+## Sponsors
+
+No sponsor yet :(
+Support this project by [donating](https://www.patreon.com/metroui).
+
+---
+Copyright © 2025 by [Serhii Pimenov](https://pimenov.com.ua)
