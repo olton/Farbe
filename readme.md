@@ -1,6 +1,8 @@
 # Farbe
 
-**Farbe** - is a small javascript library for manipulating with a color.
+ **Farbe** - is a small javascript library for manipulating with a color.
+
+![Alt](https://repobeats.axiom.co/api/embed/52d3daac7718fbf8d53459533039ae580ff272dd.svg "Repobeats analytics image")
 
 Farbe provides `class` and `routines` for operations with color. 
 
