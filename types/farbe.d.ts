@@ -1,7 +1,7 @@
 // Type definitions for Farbe color library
 // Project: https://github.com/olton/farbe
 
-declare module 'farbe' {
+declare module '@olton/farbe' {
   // Color Types
   export type RGB = [number, number, number];
   export type RGBA = [number, number, number, number] | { r: number, g: number, b: number, a: number };
