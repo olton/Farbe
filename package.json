@@ -2,12 +2,12 @@
   "name": "@olton/farbe",
   "description": "Color Manipulation library",
   "private": false,
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "author": "Serhii Pimenov <serhii@pimenov.com.ua> (https://pimenov.com.ua)",
-  "main": "./dist/farbe.js",
+  "main": "dist/farbe.js",
   "type": "module",
-  "types": "./types/farbe.d.ts",
+  "types": "types/farbe.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/olton/farbe.git"
