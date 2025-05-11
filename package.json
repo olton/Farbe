@@ -2,7 +2,7 @@
   "name": "@olton/farbe",
   "description": "Color Manipulation library",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "license": "MIT",
   "author": "Serhii Pimenov <serhii@pimenov.com.ua> (https://pimenov.com.ua)",
   "main": "dist/farbe.js",
@@ -43,7 +43,8 @@
     "clear": "shx rm -rf lib/* dist/*",
     "build": "npm run clear && cross-env MODE=production node build.js",
     "dev": "cross-env MODE=development node build.js",
-    "pub": "npm run build && npm publish --access public"
+    "pub": "npm run build && npm publish --access public",
+    "test": "latte"
   },
   "devDependencies": {
     "@olton/esbuild-plugin-progress": "^0.3.0",

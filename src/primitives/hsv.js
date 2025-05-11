@@ -6,6 +6,6 @@ export default class HSV {
     }
 
     toString(){
-        return "hsv(" + [Math.round(this.h), Math.round(this.s*100)+"%", Math.round(this.v*100)+"%"].join(", ") + ")";
+        return "hsv(" + [Math.round(this.h), Math.round(this.s*100)+"%", Math.round(this.v*100)+"%"].join(",") + ")";
     }
 }

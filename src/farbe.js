@@ -368,30 +368,46 @@ export class Farbe {
     }
 
     channel(ch, val){
-        const currentType = this.type
+        const currentType = `${this.type}`.toUpperCase()
 
         if (["red", "green", "blue"].includes(ch)) {
             this.toRGB();
-            this._value[["red", "green", "blue"].indexOf(ch)] = val;
-            this["to"+currentType]();
+            const m = {
+                red: "r",
+                green: "g",
+                blue: "b",
+            }
+            this._value[m[ch]] = val;
+            this[`to${currentType}`]();
         }
         if (ch === "alpha" && this._value.a) {
             this._value.a = val;
         }
         if (["hue", "saturation", "value"].includes(ch)) {
             this.toHSV();
-            this._value[["hue", "saturation", "value"].indexOf(ch)] = val;
-            this["to"+currentType]();
+            const m = {
+                hue: "h",
+                saturation: "s",
+                value: "v",
+            }
+            this._value[m[ch]] = val;
+            this[`to${currentType}`]();
         }
         if (["lightness"].includes(ch)) {
             this.toHSL();
-            this._value[2] = val;
-            this["to"+currentType]();
+            this._value.l = val;
+            this[`to${currentType}`]();
         }
         if (["cyan", "magenta", "yellow", "black"].includes(ch)) {
             this.toCMYK();
-            this._value[["cyan", "magenta", "yellow", "black"].indexOf(ch)] = val;
-            this["to"+currentType]();
+            const m = {
+                cyan: "c",
+                magenta: "m",
+                yellow: "y",
+                black: "k",
+            }
+            this._value[m[ch]] = val;
+            this[`to${currentType}`]();
         }
 
         return this;

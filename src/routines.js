@@ -1,9 +1,9 @@
-import HSV from "./primitives/hsv";
-import HSL from "./primitives/hsl";
-import HSLA from "./primitives/hsla";
-import RGB from "./primitives/rgb";
-import RGBA from "./primitives/rgba";
-import CMYK from "./primitives/cmyk";
+import HSV from "./primitives/hsv.js";
+import HSL from "./primitives/hsl.js";
+import HSLA from "./primitives/hsla.js";
+import RGB from "./primitives/rgb.js";
+import RGBA from "./primitives/rgba.js";
+import CMYK from "./primitives/cmyk.js";
 
 import {StandardColorPalette, MetroColorPalette} from "./palette.js";
 
@@ -669,9 +669,9 @@ export const toRGB = color => {
  * @param alpha
  * @returns {RGBA|*}
  */
-export const toRGBA = (color, alpha = 1) => {
+export const toRGBA = (color, alpha ) => {
     if (isRGBA(color)) {
-        if (alpha) {
+        if (typeof alpha !== "undefined") {
             color.a = alpha;
         }
         return color;
@@ -686,7 +686,7 @@ export const toRGBA = (color, alpha = 1) => {
  * @returns {HSV}
  */
 export const toHSV = color => {
-    return rgb2hsv(toRGB(color));
+    return isHSV(color) ? color : rgb2hsv(toRGB(color));
 };
 
 /**
@@ -695,7 +695,7 @@ export const toHSV = color => {
  * @returns {HSL}
  */
 export const toHSL = color => {
-    return hsv2hsl(rgb2hsv(toRGB(color)));
+    return isHSL(color) ? color : hsv2hsl(rgb2hsv(toRGB(color)));
 };
 
 /**
@@ -722,7 +722,7 @@ export const toHSLA = (color, alpha = 1) => {
  * @returns {CMYK}
  */
 export const toCMYK = color => {
-    return rgb2cmyk(toRGB(color));
+    return isCMYK(color) ? color : rgb2cmyk(toRGB(color));
 };
 
 /**
@@ -898,8 +898,8 @@ export const desaturate = (color, amount) => {
     }
 
     hsl = toHSL(color);
-    hsl.s -= amount / 100;
-    hsl.s = clamp(hsl.s);
+    hsl.s -= amount < 1 ? amount : amount / 100;
+    hsl.s = clamp(hsl.s, 0, 1);
 
     type = colorType(color).toLowerCase();
 
@@ -918,8 +918,14 @@ export const spin = (color, amount) => {
     }
 
     hsl = toHSL(color);
-    hue = (hsl.h + amount) % 360;
-    hsl.h = hue < 0 ? 360 + hue : hue;
+    hue = hsl.h + amount;
+    if (hue > 360) {
+        hue = hue % 360;
+    } else if (hue < 0) {
+        hue = 360 + (hue % 360);
+    }
+
+    hsl.h = hue;
 
     type = colorType(color).toLowerCase();
 
@@ -927,7 +933,7 @@ export const spin = (color, amount) => {
         alpha = color.a;
     }
 
-    return toColor(hsl, type, alpha);
+    return type === "hsl" ? hsl : toColor(hsl, type, alpha);
 }
 
 export const brighten = (color, amount) => {
@@ -1189,11 +1195,15 @@ export const createColorScheme = (color, name, format = colorTypes.HEX, options)
         }
 
         default:
-            console.error("Unknown scheme name");
+            console.error("Unknown schema name");
     }
 
     return name === "material" ? scheme[0] : convert(scheme, format);
 };
+
+export const isPrimitive = (value) => {
+    return value instanceof HSV || value instanceof HSL || value instanceof HSLA || value instanceof RGB || value instanceof RGBA || value instanceof CMYK;
+}
 
 /**
  * Parse from string to color type
@@ -1201,6 +1211,9 @@ export const createColorScheme = (color, name, format = colorTypes.HEX, options)
  * @returns {HSL|RGB|RGBA|string|HSV|CMYK|HSLA}
  */
 export const parseColor = function (color) {
+    if (isPrimitive(color)) {
+        return color;
+    }
     let _color = (""+color).toLowerCase();
 
     if (typeof StandardColorPalette[_color] !== 'undefined') {
