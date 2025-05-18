@@ -2,7 +2,7 @@
   "name": "@olton/farbe",
   "description": "Color Manipulation library",
   "private": false,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "author": "Serhii Pimenov <serhii@pimenov.com.ua> (https://pimenov.com.ua)",
   "main": "dist/farbe.js",
@@ -52,9 +52,7 @@
     "esbuild": "^0.25.4",
     "esbuild-plugin-replace": "^1.4.0",
     "path": "^0.12.7",
-    "shx": "^0.4.0"
-  },
-  "dependencies": {
+    "shx": "^0.4.0",
     "@olton/latte": "^0.16.2"
   }
 }
