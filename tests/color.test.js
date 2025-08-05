@@ -117,12 +117,12 @@ describe('Color Manipulation', () => {
 
     it('should darken color', () => {
         const darkened = darken('#ff0000', 20)
-        return expect(darkened).toBe('#eb0000')
+        return expect(darkened).toBe('#990000')
     })
 
     it('should lighten color', () => {
         const lightened = lighten('#ff0000', 20)
-        return expect(lightened).toBe('#ff1414')
+        return expect(lightened).toBe('#ff6666')
     })
 
     it('should shift hue', () => {

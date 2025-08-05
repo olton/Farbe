@@ -756,46 +756,13 @@ export const darken = (color, amount = 10) => {
  * @returns {*}
  */
 export const lighten = (color, amount = 10) => {
-    let type,
-        res,
-        alpha = 1,
-        ring = amount > 0;
+    const type = colorType(color).toLowerCase();
+    const _color = toHSLA(color);
 
-    const calc = function (_color, _amount) {
-        let r, g, b;
-        const col = _color.slice(1);
+    _color.l += amount / 100;
+    _color.l = clamp(_color.l, 0, 1);
 
-        const num = parseInt(col, 16);
-        r = (num >> 16) + _amount;
-
-        if (r > 255) r = 255;
-        else if (r < 0) r = 0;
-
-        b = ((num >> 8) & 0x00ff) + _amount;
-
-        if (b > 255) b = 255;
-        else if (b < 0) b = 0;
-
-        g = (num & 0x0000ff) + _amount;
-
-        if (g > 255) g = 255;
-        else if (g < 0) g = 0;
-
-        return "#" + (g | (b << 8) | (r << 16)).toString(16);
-    };
-
-    type = colorType(color).toLowerCase();
-
-    if (type === colorTypes.RGBA) {
-        alpha = color.a;
-    }
-
-    do {
-        res = calc(toHEX(color), amount);
-        ring ? amount-- : amount++;
-    } while (res.length < 7);
-
-    return toColor(res, type);
+    return toColor(_color, type);
 };
 
 /**

@@ -1,4 +1,4 @@
-import * as Routines from "./routines";
+import * as Routines from "./routines.js";
 import { Palette, MetroColorPalette, StandardColorPalette } from "./palette.js";
 import { Farbe } from "./farbe.js";
 
