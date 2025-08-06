@@ -838,43 +838,17 @@ export const shade = (color, amount) => {
 }
 
 export const saturate = (color, amount) => {
-    let hsl, type, alpha;
+    const type = colorType(color).toLowerCase();
+    const _color = toHSLA(color);
 
-    if (!isColor(color)) {
-        throw new Error(color + " is not a valid color value!");
-    }
+    _color.s += amount / 100;
+    _color.s = clamp(_color.s, 0, 1);
 
-    hsl = toHSL(color);
-    hsl.s += amount / 100;
-    hsl.s = clamp(0, 1, hsl.s);
-
-    type = colorType(color).toLowerCase();
-
-    if (type === colorTypes.RGBA || type === colorTypes.HSLA) {
-        alpha = color.a;
-    }
-
-    return toColor(hsl, type, alpha);
+    return toColor(_color, type);
 }
 
 export const desaturate = (color, amount) => {
-    let hsl, type, alpha;
-
-    if (!isColor(color)) {
-        throw new Error(color + " is not a valid color value!");
-    }
-
-    hsl = toHSL(color);
-    hsl.s -= amount < 1 ? amount : amount / 100;
-    hsl.s = clamp(hsl.s, 0, 1);
-
-    type = colorType(color).toLowerCase();
-
-    if (type === colorTypes.RGBA || type === colorTypes.HSLA) {
-        alpha = color.a;
-    }
-
-    return toColor(hsl, type, alpha);
+    return saturate(color, -1 * Math.abs(amount));
 }
 
 export const spin = (color, amount) => {
@@ -904,24 +878,18 @@ export const spin = (color, amount) => {
 }
 
 export const brighten = (color, amount) => {
-    let rgb, type, alpha;
-
-    if (!isColor(color)) {
-        throw new Error(color + " is not a valid color value!");
-    }
-
-    rgb = toRGB(color);
-    rgb.r = Math.max(0, Math.min(255, rgb.r - Math.round(255 * - (amount / 100))));
-    rgb.g = Math.max(0, Math.min(255, rgb.g - Math.round(255 * - (amount / 100))));
-    rgb.b = Math.max(0, Math.min(255, rgb.b - Math.round(255 * - (amount / 100))));
-
-    type = colorType(color).toLowerCase();
+    let alpha = 1
+    const type = colorType(color).toLowerCase();
+    const _color = toHSV(color);
 
     if (type === colorTypes.RGBA || type === colorTypes.HSLA) {
         alpha = color.a;
     }
 
-    return toColor(rgb, type, alpha);
+    _color.v += amount / 100;
+    _color.v = clamp(_color.v, 0, 1);
+
+    return toColor(_color, type, alpha);
 }
 
 export const add = (val1, val2, returnAs) => {
